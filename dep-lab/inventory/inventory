@@ -1,0 +1,11 @@
+
+[intranetweb]
+servera.lab.example.com
+serverc.lab.example.com
+serverd.lab.example.com
+
+[internetweb]
+
+[everyone:children]
+intranetweb
+internetweb

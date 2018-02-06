@@ -1,0 +1,17 @@
+---
+- name: Writing and Running Playbooks
+  hosts: web
+  tasks:
+  - name: YUM making sure httpd is installed
+    yum:
+      name: httpd
+      state: present
+  - name: COPY copying the file files/index.html to /var/www/html/index.html
+    copy:
+      src: files/index.html
+      dest: /var/www/html/index.html
+  - name: SERVICE make sure httpd is turned on
+    service:
+      name: httpd
+      enabled: yes
+      state: started
