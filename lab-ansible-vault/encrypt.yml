@@ -1,0 +1,8 @@
+---
+- name: encript stuff
+  hosts: prodservers
+  become: yes
+  remote_user: devops
+  roles:
+    - role: encryptdisk
+      addkey: yes

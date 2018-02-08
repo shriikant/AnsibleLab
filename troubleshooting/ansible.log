@@ -1,0 +1,143 @@
+2018-02-08 14:17:01,428 p=12027 u=student |  ERROR! Syntax Error while loading YAML.
+
+
+The error appears to have been in '/home/student/troubleshooting/samba.yml': line 8, column 30, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+    install_state: installed
+    random_var: This is colon: test
+                             ^ here
+
+2018-02-08 14:17:49,369 p=12096 u=student |  ERROR! Syntax Error while loading YAML.
+
+
+The error appears to have been in '/home/student/troubleshooting/samba.yml': line 43, column 4, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+   - name: deliver samba config
+   ^ here
+
+2018-02-08 14:18:35,125 p=12128 u=student |  ERROR! Syntax Error while loading YAML.
+
+
+The error appears to have been in '/home/student/troubleshooting/samba.yml': line 14, column 15, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+      name: samba
+      state: {{ install_state }}
+              ^ here
+We could be wrong, but this one looks like it might be an issue with
+missing quotes.  Always quote template expression brackets when they
+start a value. For instance:
+
+    with_items:
+      - {{ foo }}
+
+Should be written as:
+
+    with_items:
+      - "{{ foo }}"
+
+2018-02-08 14:19:31,169 p=12187 u=student |  PLAY [Install a samba server] ***************************************************************************
+2018-02-08 14:19:31,353 p=12187 u=student |  TASK [Gathering Facts] **********************************************************************************
+2018-02-08 14:19:33,484 p=12187 u=student |  fatal: [servera.lab.exammple.com]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added 'servera.lab.exammple.com,81.177.135.182' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey,password).\r\n", "unreachable": true}
+2018-02-08 14:19:33,490 p=12187 u=student |  	to retry, use: --limit @/home/student/troubleshooting/samba.retry
+
+2018-02-08 14:19:33,491 p=12187 u=student |  PLAY RECAP **********************************************************************************************
+2018-02-08 14:19:33,491 p=12187 u=student |  servera.lab.exammple.com   : ok=0    changed=0    unreachable=1    failed=0   
+2018-02-08 14:20:27,509 p=12277 u=student |  Using /home/student/troubleshooting/ansible.cfg as config file
+2018-02-08 14:20:27,688 p=12277 u=student |  Loading callback plugin default of type stdout, v2.0 from /usr/lib/python2.7/site-packages/ansible/plugins/callback/__init__.pyc
+2018-02-08 14:20:27,822 p=12277 u=student |  PLAYBOOK: samba.yml *************************************************************************************
+2018-02-08 14:20:27,823 p=12277 u=student |  1 plays in samba.yml
+2018-02-08 14:20:27,864 p=12277 u=student |  PLAY [Install a samba server] ***************************************************************************
+2018-02-08 14:20:28,034 p=12277 u=student |  TASK [Gathering Facts] **********************************************************************************
+2018-02-08 14:20:28,388 p=12277 u=student |  Using module file /usr/lib/python2.7/site-packages/ansible/modules/system/setup.py
+2018-02-08 14:20:29,543 p=12277 u=student |  fatal: [servera.lab.exammple.com]: UNREACHABLE! => {
+    "changed": false, 
+    "msg": "Failed to connect to the host via ssh: OpenSSH_6.6.1, OpenSSL 1.0.1e-fips 11 Feb 2013\r\ndebug1: Reading configuration data /home/student/.ssh/config\r\ndebug1: /home/student/.ssh/config line 1: Applying options for *\r\ndebug1: Reading configuration data /etc/ssh/ssh_config\r\ndebug1: /etc/ssh/ssh_config line 56: Applying options for *\r\ndebug1: auto-mux: Trying existing master\r\ndebug1: Control socket \"/home/student/.ansible/cp/d4775f48c9\" does not exist\r\ndebug2: ssh_connect: needpriv 0\r\ndebug1: Connecting to servera.lab.exammple.com [81.177.135.182] port 22.\r\ndebug2: fd 3 setting O_NONBLOCK\r\ndebug1: fd 3 clearing O_NONBLOCK\r\ndebug1: Connection established.\r\ndebug3: timeout: 9873 ms remain after connect\r\ndebug3: Incorrect RSA1 identifier\r\ndebug3: Could not load \"/home/student/.ssh/lab_rsa\" as a RSA1 public key\r\ndebug1: identity file /home/student/.ssh/lab_rsa type 1\r\ndebug1: identity file /home/student/.ssh/lab_rsa-cert type -1\r\ndebug1: Enabling compatibility mode for protocol 2.0\r\ndebug1: Local version string SSH-2.0-OpenSSH_6.6.1\r\ndebug1: Remote protocol version 2.0, remote software version OpenSSH_7.4\r\ndebug1: match: OpenSSH_7.4 pat OpenSSH* compat 0x04000000\r\ndebug2: fd 3 setting O_NONBLOCK\r\ndebug3: load_hostkeys: loading entries for host \"servera.lab.exammple.com\" from file \"/home/student/.ssh/known_hosts\"\r\ndebug3: load_hostkeys: found key type ECDSA in file /home/student/.ssh/known_hosts:11\r\ndebug3: load_hostkeys: loaded 1 keys\r\ndebug3: order_hostkeyalgs: prefer hostkeyalgs: ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521\r\ndebug1: SSH2_MSG_KEXINIT sent\r\ndebug1: SSH2_MSG_KEXINIT received\r\ndebug2: kex_parse_kexinit: curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1\r\ndebug2: kex_parse_kexinit: ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-dss-cert-v01@openssh.com,ssh-rsa-cert-v00@openssh.com,ssh-dss-cert-v00@openssh.com,ssh-ed25519,ssh-rsa,ssh-dss\r\ndebug2: kex_parse_kexinit: aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes128-cbc,3des-cbc,blowfish-cbc,cast128-cbc,aes192-cbc,aes256-cbc,arcfour,rijndael-cbc@lysator.liu.se\r\ndebug2: kex_parse_kexinit: aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes128-cbc,3des-cbc,blowfish-cbc,cast128-cbc,aes192-cbc,aes256-cbc,arcfour,rijndael-cbc@lysator.liu.se\r\ndebug2: kex_parse_kexinit: hmac-md5-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-ripemd160-etm@openssh.com,hmac-sha1-96-etm@openssh.com,hmac-md5-96-etm@openssh.com,hmac-md5,hmac-sha1,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-ripemd160,hmac-ripemd160@openssh.com,hmac-sha1-96,hmac-md5-96\r\ndebug2: kex_parse_kexinit: hmac-md5-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-ripemd160-etm@openssh.com,hmac-sha1-96-etm@openssh.com,hmac-md5-96-etm@openssh.com,hmac-md5,hmac-sha1,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-ripemd160,hmac-ripemd160@openssh.com,hmac-sha1-96,hmac-md5-96\r\ndebug2: kex_parse_kexinit: zlib@openssh.com,zlib,none\r\ndebug2: kex_parse_kexinit: zlib@openssh.com,zlib,none\r\ndebug2: kex_parse_kexinit: \r\ndebug2: kex_parse_kexinit: \r\ndebug2: kex_parse_kexinit: first_kex_follows 0 \r\ndebug2: kex_parse_kexinit: reserved 0 \r\ndebug2: kex_parse_kexinit: curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1\r\ndebug2: kex_parse_kexinit: ssh-rsa,rsa-sha2-512,rsa-sha2-256,ecdsa-sha2-nistp256,ssh-ed25519\r\ndebug2: kex_parse_kexinit: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc,3des-cbc\r\ndebug2: kex_parse_kexinit: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc,3des-cbc\r\ndebug2: kex_parse_kexinit: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: kex_parse_kexinit: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\r\ndebug2: kex_parse_kexinit: none,zlib@openssh.com\r\ndebug2: kex_parse_kexinit: none,zlib@openssh.com\r\ndebug2: kex_parse_kexinit: \r\ndebug2: kex_parse_kexinit: \r\ndebug2: kex_parse_kexinit: first_kex_follows 0 \r\ndebug2: kex_parse_kexinit: reserved 0 \r\ndebug2: mac_setup: setup hmac-sha1-etm@openssh.com\r\ndebug1: kex: server->client aes128-ctr hmac-sha1-etm@openssh.com zlib@openssh.com\r\ndebug2: mac_setup: setup hmac-sha1-etm@openssh.com\r\ndebug1: kex: client->server aes128-ctr hmac-sha1-etm@openssh.com zlib@openssh.com\r\ndebug1: kex: curve25519-sha256@libssh.org need=20 dh_need=20\r\ndebug1: kex: curve25519-sha256@libssh.org need=20 dh_need=20\r\ndebug1: sending SSH2_MSG_KEX_ECDH_INIT\r\ndebug1: expecting SSH2_MSG_KEX_ECDH_REPLY\r\ndebug1: Server host key: ECDSA a8:64:29:55:b7:aa:b7:8d:7e:70:66:cb:fa:60:29:dc\r\ndebug3: load_hostkeys: loading entries for host \"servera.lab.exammple.com\" from file \"/home/student/.ssh/known_hosts\"\r\ndebug3: load_hostkeys: found key type ECDSA in file /home/student/.ssh/known_hosts:11\r\ndebug3: load_hostkeys: loaded 1 keys\r\ndebug3: load_hostkeys: loading entries for host \"81.177.135.182\" from file \"/home/student/.ssh/known_hosts\"\r\ndebug3: load_hostkeys: found key type ECDSA in file /home/student/.ssh/known_hosts:11\r\ndebug3: load_hostkeys: loaded 1 keys\r\ndebug1: Host 'servera.lab.exammple.com' is known and matches the ECDSA host key.\r\ndebug1: Found key in /home/student/.ssh/known_hosts:11\r\ndebug1: ssh_ecdsa_verify: signature correct\r\ndebug2: kex_derive_keys\r\ndebug2: set_newkeys: mode 1\r\ndebug1: SSH2_MSG_NEWKEYS sent\r\ndebug1: expecting SSH2_MSG_NEWKEYS\r\ndebug2: set_newkeys: mode 0\r\ndebug1: SSH2_MSG_NEWKEYS received\r\ndebug1: SSH2_MSG_SERVICE_REQUEST sent\r\ndebug2: service_accept: ssh-userauth\r\ndebug1: SSH2_MSG_SERVICE_ACCEPT received\r\ndebug2: key: /home/student/.ssh/lab_rsa (0x7fe8ccda08f0), explicit\r\ndebug1: Authentications that can continue: publickey,password\r\ndebug3: start over, passed a different list publickey,password\r\ndebug3: preferred gssapi-with-mic,gssapi-keyex,hostbased,publickey\r\ndebug3: authmethod_lookup publickey\r\ndebug3: remaining preferred: ,gssapi-keyex,hostbased,publickey\r\ndebug3: authmethod_is_enabled publickey\r\ndebug1: Next authentication method: publickey\r\ndebug1: Offering RSA public key: /home/student/.ssh/lab_rsa\r\ndebug3: send_pubkey_test\r\ndebug2: we sent a publickey packet, wait for reply\r\ndebug1: Authentications that can continue: publickey,password\r\ndebug2: we did not send a packet, disable method\r\ndebug1: No more authentication methods to try.\r\nPermission denied (publickey,password).\r\n", 
+    "unreachable": true
+}
+2018-02-08 14:20:29,557 p=12277 u=student |  	to retry, use: --limit @/home/student/troubleshooting/samba.retry
+
+2018-02-08 14:20:29,557 p=12277 u=student |  PLAY RECAP **********************************************************************************************
+2018-02-08 14:20:29,557 p=12277 u=student |  servera.lab.exammple.com   : ok=0    changed=0    unreachable=1    failed=0   
+2018-02-08 14:21:23,414 p=12334 u=student |  PLAY [Install a samba server] ***************************************************************************
+2018-02-08 14:21:23,613 p=12334 u=student |  TASK [Gathering Facts] **********************************************************************************
+2018-02-08 14:21:25,921 p=12334 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:21:25,933 p=12334 u=student |  TASK [install samba] ************************************************************************************
+2018-02-08 14:21:35,778 p=12334 u=student |  changed: [servera.lab.example.com]
+2018-02-08 14:21:35,785 p=12334 u=student |  TASK [install firewalld] ********************************************************************************
+2018-02-08 14:21:37,353 p=12334 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:21:37,375 p=12334 u=student |  TASK [debug install_state variable] *********************************************************************
+2018-02-08 14:21:37,469 p=12334 u=student |  ok: [servera.lab.example.com] => {
+    "msg": "The state for the samba service is installed"
+}
+2018-02-08 14:21:37,489 p=12334 u=student |  TASK [start samba] **************************************************************************************
+2018-02-08 14:21:39,661 p=12334 u=student |  changed: [servera.lab.example.com]
+2018-02-08 14:21:39,677 p=12334 u=student |  TASK [start firewalld] **********************************************************************************
+2018-02-08 14:21:40,867 p=12334 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:21:40,881 p=12334 u=student |  TASK [configure firewall for samba] *********************************************************************
+2018-02-08 14:21:42,662 p=12334 u=student |  changed: [servera.lab.example.com]
+2018-02-08 14:21:42,678 p=12334 u=student |  TASK [deliver samba config] *****************************************************************************
+2018-02-08 14:21:42,764 p=12334 u=student |  fatal: [servera.lab.example.com]: FAILED! => {"changed": false, "failed": true, "msg": "Unable to find 'samba.j2' in expected paths."}
+2018-02-08 14:21:42,776 p=12334 u=student |  	to retry, use: --limit @/home/student/troubleshooting/samba.retry
+
+2018-02-08 14:21:42,776 p=12334 u=student |  PLAY RECAP **********************************************************************************************
+2018-02-08 14:21:42,776 p=12334 u=student |  servera.lab.example.com    : ok=7    changed=3    unreachable=0    failed=1   
+2018-02-08 14:21:54,476 p=12423 u=student |  PLAY [Install a samba server] ***************************************************************************
+2018-02-08 14:21:54,637 p=12423 u=student |  TASK [Gathering Facts] **********************************************************************************
+2018-02-08 14:21:56,517 p=12423 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:21:56,530 p=12423 u=student |  TASK [install samba] ************************************************************************************
+2018-02-08 14:21:58,153 p=12423 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:21:58,164 p=12423 u=student |  TASK [install firewalld] ********************************************************************************
+2018-02-08 14:21:59,523 p=12423 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:21:59,536 p=12423 u=student |  TASK [debug install_state variable] *********************************************************************
+2018-02-08 14:21:59,633 p=12423 u=student |  ok: [servera.lab.example.com] => {
+    "msg": "The state for the samba service is installed"
+}
+2018-02-08 14:21:59,647 p=12423 u=student |  TASK [start samba] **************************************************************************************
+2018-02-08 14:22:00,912 p=12423 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:00,926 p=12423 u=student |  TASK [start firewalld] **********************************************************************************
+2018-02-08 14:22:02,041 p=12423 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:02,057 p=12423 u=student |  TASK [configure firewall for samba] *********************************************************************
+2018-02-08 14:22:03,686 p=12423 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:03,698 p=12423 u=student |  TASK [deliver samba config] *****************************************************************************
+2018-02-08 14:22:07,227 p=12423 u=student |  changed: [servera.lab.example.com]
+2018-02-08 14:22:07,234 p=12423 u=student |  PLAY RECAP **********************************************************************************************
+2018-02-08 14:22:07,235 p=12423 u=student |  servera.lab.example.com    : ok=8    changed=1    unreachable=0    failed=0   
+2018-02-08 14:22:20,480 p=12511 u=student |  PLAY [Install a samba server] ***************************************************************************
+2018-02-08 14:22:21,633 p=12511 u=student |  Perform task: TASK: Gathering Facts (N)o/(y)es/(c)ontinue: **********************************************
+2018-02-08 14:22:21,638 p=12511 u=student |  TASK [Gathering Facts] **********************************************************************************
+2018-02-08 14:22:23,429 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:24,528 p=12511 u=student |  Perform task: TASK: install samba (N)o/(y)es/(c)ontinue: ************************************************
+2018-02-08 14:22:24,537 p=12511 u=student |  TASK [install samba] ************************************************************************************
+2018-02-08 14:22:26,135 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:27,088 p=12511 u=student |  Perform task: TASK: install firewalld (N)o/(y)es/(c)ontinue: ********************************************
+2018-02-08 14:22:27,098 p=12511 u=student |  TASK [install firewalld] ********************************************************************************
+2018-02-08 14:22:28,490 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:29,553 p=12511 u=student |  Perform task: TASK: debug install_state variable (N)o/(y)es/(c)ontinue: *********************************
+2018-02-08 14:22:29,565 p=12511 u=student |  TASK [debug install_state variable] *********************************************************************
+2018-02-08 14:22:29,663 p=12511 u=student |  ok: [servera.lab.example.com] => {
+    "msg": "The state for the samba service is installed"
+}
+2018-02-08 14:22:32,375 p=12511 u=student |  Perform task: TASK: start samba (N)o/(y)es/(c)ontinue: **************************************************
+2018-02-08 14:22:32,387 p=12511 u=student |  TASK [start samba] **************************************************************************************
+2018-02-08 14:22:33,663 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:34,780 p=12511 u=student |  Perform task: TASK: start firewalld (N)o/(y)es/(c)ontinue: **********************************************
+2018-02-08 14:22:34,789 p=12511 u=student |  TASK [start firewalld] **********************************************************************************
+2018-02-08 14:22:35,896 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:36,944 p=12511 u=student |  Perform task: TASK: configure firewall for samba (N)o/(y)es/(c)ontinue: *********************************
+2018-02-08 14:22:36,960 p=12511 u=student |  TASK [configure firewall for samba] *********************************************************************
+2018-02-08 14:22:38,530 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:39,532 p=12511 u=student |  Perform task: TASK: deliver samba config (N)o/(y)es/(c)ontinue: *****************************************
+2018-02-08 14:22:39,548 p=12511 u=student |  TASK [deliver samba config] *****************************************************************************
+2018-02-08 14:22:42,911 p=12511 u=student |  ok: [servera.lab.example.com]
+2018-02-08 14:22:42,917 p=12511 u=student |  PLAY RECAP **********************************************************************************************
+2018-02-08 14:22:42,917 p=12511 u=student |  servera.lab.example.com    : ok=8    changed=0    unreachable=0    failed=0   

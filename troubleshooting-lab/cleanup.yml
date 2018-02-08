@@ -1,0 +1,21 @@
+---
+# start of secure web server playbook
+- name: create secure web service
+  hosts: tower
+  user: devops
+  become: true
+  vars:
+    random_var: "This is colon: test"
+
+  tasks:
+    - block:
+        - name: remove web server packages
+          yum:
+            name: "{{ item }}"
+            state: absent
+          tags:
+            - packages
+          with_items:
+            - httpd
+            - mod_ssl
+            - crypto-utils
