@@ -1,0 +1,43 @@
+---
+# tasks file for myapache
+- name: install {{ apache_packages }} packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "{{ apache_packages }}"
+
+- name: copy apache_httpdconf.j2 to /etc/httpd/conf/httpd.conf
+  template:
+    src: apache_httpdconf.j2
+    dest: /etc/httpd/conf/httpd.conf
+    owner: root
+    group: root
+    mode: 0444
+  when: apache_enable == true
+
+- name: copy apache_indexhtml.j2 to /var/www/html/index.html
+  template:
+    src: apache_indexhtml.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0444
+  when: apache_enable == true
+
+- name: Start {{ apache_packages }} services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - "{{ apache_packages }}"
+  when: apache_enable == true
+  
+- name: Firewall enable http traffic
+  firewalld:
+    service: http
+    immediate: yes
+    permanent: yes
+    state: enabled
+  when: apache_enable == true

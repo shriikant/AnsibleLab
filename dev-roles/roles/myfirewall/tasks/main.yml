@@ -1,0 +1,16 @@
+---
+  - name: install firewalld
+    yum:
+      name: firewalld
+      state: latest
+  - name: service firewalld
+    service: 
+      name: firewalld
+      state: started
+      enabled: yes
+  - name: firewall service config
+    firewalld:
+      state: enabled
+      immediate: yes
+      permanent: yes
+      service: "{{ firewall_service }}"

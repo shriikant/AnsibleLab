@@ -1,0 +1,6 @@
+---
+- name: Config my Env
+  hosts: all
+  roles:
+    - role: student.myenv
+      myenv_user: student

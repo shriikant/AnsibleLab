@@ -1,0 +1,6 @@
+---
+# vars file for stundent.myenv
+myenv_packages:
+  - git
+  - tree
+  - vim-enhanced
